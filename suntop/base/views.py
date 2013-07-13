@@ -1,6 +1,7 @@
 from django.http  import HttpResponse
+from django.shortcuts import render_to_response
 
-#First Start HelloWorld
+
 def hello(req):
-    return HttpResponse("Python First." )
-	
+    template_name='base.html' 
+    return render_to_response(template_name,{'hello':'hello'})

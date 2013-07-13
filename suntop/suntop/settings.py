@@ -1,4 +1,5 @@
 # Django settings for suntop project.
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -59,11 +60,15 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+#STATIC_ROOT = '/templates/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
+
+HERE = os.path.dirname(__file__)
 STATIC_URL = '/static/'
+STATIC_ROOT = HERE+'/templates/'
+
 ROOT_URLCONF = 'suntop.urls'
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -105,7 +110,10 @@ ROOT_URLCONF = 'suntop.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'suntop.wsgi.application'
 
+BASE_TEMPLATE_DIR = os.path.join(os.path.dirname(__file__),'templates'.replace('\\','/'))
+
 TEMPLATE_DIRS = (
+    BASE_TEMPLATE_DIR,
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
