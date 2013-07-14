@@ -16,13 +16,17 @@ mysql sqlite
 
 model:
 一对多
-<1文件表：
-id   文件路径（日期） 文件大小 原文件名 md5值
+<1  file_table：
+id   filename(CharField)  newname path size type  user(foreign key)
+filename = models.ImageField(upload_to=%Y/%m/%d)
+newname = models.CharField(max_length=20,unique=True)
+path = models.CharField(max_length=10)
+size = models.CharField(max_length=10)
+type = models.CharField(max_ength=5)
+user = models.ForeignKey(User)
 
-？文件识别，分别存储
 
-<2用户表：
-用django的用户表
+<2  user（用django的用户表）：
 邮箱  密码
 
 view：
