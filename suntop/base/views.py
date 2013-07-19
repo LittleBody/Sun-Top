@@ -1,7 +1,11 @@
-from django.http  import HttpResponse
+from django.http import HttpResponse
+from django.views.generic.base import View
 from django.shortcuts import render_to_response
 
 
-def hello(req):
-    template_name='base.html' 
-    return render_to_response(template_name,{'hello':'hello'})
+class HelloView(View):
+    def get(self,request):
+        return render_to_response('base.html',{'hello':'HelloWorld'})
+helloView = HelloView.as_view()
+
+
