@@ -1,5 +1,6 @@
 # Django settings for suntop project.
 import os
+PROJECT_PATH='/'.join(os.path.abspath(os.path.dirname(__file__)).split('/')[:-1])
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -49,7 +50,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(PROJECT_PATH,'static')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -64,15 +65,11 @@ MEDIA_URL = ''
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-
-HERE = os.path.dirname(__file__)
 STATIC_URL = '/static/'
-STATIC_ROOT = HERE+'/templates/'
-HERE = os.path.dirname(__file__)
-ROOT_URLCONF = 'suntop.urls'
+
 # Additional locations of static files
 STATICFILES_DIRS = (
-    os.path.join(HERE,"static"),
+    'static',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -111,14 +108,11 @@ ROOT_URLCONF = 'suntop.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'suntop.wsgi.application'
 
-BASE_TEMPLATE_DIR = os.path.join(os.path.dirname(__file__),'templates'.replace('\\','/'))
-
 TEMPLATE_DIRS = (
-    BASE_TEMPLATE_DIR,
-    HERE+'/templates',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    'templates',
 )
 
 INSTALLED_APPS = (
@@ -132,7 +126,6 @@ INSTALLED_APPS = (
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'base',
     'filemanage',
     'account',
     )
