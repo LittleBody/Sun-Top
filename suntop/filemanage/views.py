@@ -46,5 +46,6 @@ def index(request):
 def pic_view(request, pic_id):
     fileobj = File.objects.get(newname = pic_id).filename
     filename = fileobj.name
-    path = os.path.join('/static', filename)
-    print path
+    pic_path = os.path.join('/static', filename)
+    print pic_path
+    return render_to_response('pic_view.html', {'pic_path':pic_path})
