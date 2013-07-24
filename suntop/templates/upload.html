@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+{%extends 'base.html'%}
+{%block content%}
+    <!-- content starts -->
+        <div class="carousel-caption jumbotron">
+           <h1>笑一笑</h1>
+	   <h2>現在每人可獲得1 terabyte 免費上載容量。</h2>
+	   <form method="POST" action="/delete/" enctype='multipart/form-data'>
+	     <a href="http://192.168.10.100:8080/{{ newname }}/"><h3>http://192.168.10.100:8080/{{ newname }}</h3></a>
+	     <button class="btn btn-large btn-primary" type="submit">DELETE</button>
+	   </form>
+        </div>
+{%endblock%}
