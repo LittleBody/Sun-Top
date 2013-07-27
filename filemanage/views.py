@@ -6,8 +6,8 @@ import os, hashlib, string
 
 class FileForm(forms.ModelForm):
     class Meta:
-	model = File
-	fields = ['filename']
+        model = File
+        fields = ['filename']
 
 def get_md5(s):
     s = s.encode('utf8') if isinstance(s, unicode) else s
@@ -27,31 +27,30 @@ def get_hash_key(path):
 
 def index(request):
     if request.method == "POST" :
-	ff = FileForm(request.POST, request.FILES)
-	if ff.is_valid():
-	    fileobj = ff.cleaned_data['filename']
-	    filename = fileobj.name
-	    newname = get_hash_key(filename)
-	    size = fileobj.size
-	    type = os.path.splitext(filename)[1]
-	    data = File(filename=request.FILES['filename'], newname=newname, size=size, type=type)
-	    data.save()
-	    return render_to_response('upload.html', {'newname':newname})
-	else:
-	    return HttpResponse("ERROR ENTER")
+        ff = FileForm(request.POST, request.FILES)
+        if ff.is_valid():
+            fileobj = ff.cleaned_data['filename']
+            filename = fileobj.name
+            newname = get_hash_key(filename)
+            size = fileobj.size
+            type = os.path.splitext(filename)[1]
+            data = File(filename=request.FILES['filename'], newname=newname, size=size, type=type)
+            data.save()
+            return render_to_response('upload.html', {'newname':newname})
+        else:
+            return HttpResponse("ERROR ENTER")
     else:
-	ff = FileForm()
+        ff = FileForm()
     return render_to_response('index.html', {'ff':ff})
 
 def delete(request):
     if request.method == "POST" :
-	newname = request.POST.get('newname')
-	p = File.objects.get(newname = newname)
-	print p.id
-	p.delete()
-	return redirect("/")
+        newname = request.POST.get('newname')
+        p = File.objects.get(newname = newname)
+        p.delete()
+        return redirect("/")
     else:
-	return redirect("/")
+        return redirect("/")
 
 def pic_view(request, pic_id):
     fileobj = File.objects.get(newname = pic_id).filename
