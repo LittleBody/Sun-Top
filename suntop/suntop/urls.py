@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     # url(r'^admin/', include(admin.site.urls)),
     url(r'^$','filemanage.views.index'),
     url(r'^(?P<pic_id>\w{8})/$','filemanage.views.pic_view'),
-    url(r'^account/',include('account.urls')),
+#    url(r'^account/',include('account.urls')),
     url(r'^filemanage/',include('filemanage.urls')),
 )
 
