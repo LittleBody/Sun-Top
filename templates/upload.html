@@ -1,0 +1,12 @@
+{%extends 'base.html'%}
+{%block content%}
+        <div class="carousel-caption jumbotron">
+           <h1>笑一笑</h1>
+	   <h2>現在每人可獲得1 terabyte 免費上載容量。</h2>
+	   <form method="POST" action="/filemanage/delete/" enctype='multipart/form-data'>
+	     <a href="{{ newname }}/"><h3>http://www.suntop.com/{{ newname }}</h3></a>
+		<input type="hidden" name='newname' value="{{ newname }}">
+	     <button class="btn btn-large btn-primary" type="submit">DELETE</button>
+	   </form>
+        </div>
+{%endblock%}
