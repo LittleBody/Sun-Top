@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django import forms
+from urlparse import urlparse
 
 class Userform(forms.ModelForm):
     class Meta:
@@ -40,6 +41,8 @@ def registe(request):
 	return render_to_response('registe.html', {'uf':uf}, context_instance=RequestContext(request))
 
 def user_login(request):
+    last_url = request.META.get('HTTP_REFERER','/')
+    rel_last_url = urlparse(last_url).path
     if request.method == "POST" :
 	username = request.POST.get('username')
 	password = request.POST.get('password')
@@ -49,9 +52,11 @@ def user_login(request):
 		login(request, user)
 		return HttpResponseRedirect('/')
 	    else:
-		pass
+		user = "None"
+		return render_to_response('index.html', {'user':user}, context_instance=RequestContext(request))
 	else:
-	    pass
+	    user = "None"
+	    return render_to_response('index.html', {'user':user}, context_instance=RequestContext(request))
     else:
         return HttpResponseRedirect('/')
 

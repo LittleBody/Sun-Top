@@ -1,14 +1,129 @@
 <!DOCTYPE html>
-{%extends 'base.html'%}
-{%block content%}
-    <!-- content starts -->
-        <div class="carousel-caption jumbotron">
+{% load staticfiles %}
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Sun-Top</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+	background: url(/static/images/sohp_hero.jpg) 50% 10% no-repeat;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 80px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 100px;
+        line-height: 1;
+        color: #FFFFFF;
+      }
+      .jumbotron h2 {
+        font-size: 24.5px;
+        line-height: 1;
+        color: #FFFFFF;
+      }
+      .jumbotron .lead {
+        font-size: 24px;
+        line-height: 1.25;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+    </style>
+    <link href="{% static "css/bootstrap-responsive.css" %}" rel="stylesheet">
+    <link rel="shortcut icon" href="static/images/favicon.png"> </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand">Suntop</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="/">首页</a></li>
+              <li><a href="/filemanage/share/">图片浏览</a></li>
+              <li><a class="myshare" href="/filemanage/myshare/">我的共享</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">更多<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">关于我们</a></li>
+                  <li><a href="/account/registe/">注册</a></li>
+                </ul>
+              </li>
+            </ul>
+           {% if user.is_authenticated %}
+             <div class="btn-group pull-right" >
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="icon-user"></i><span class="hidden-phone">{{user.username}}</span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/account/logout/">退出</a></li>
+                </ul>
+             </div>
+	    {% else %}
+            <form class="navbar-form pull-right" method="POST" action="/account/login/">
+	      {% if user == "None" %}
+		<a>用户名或密码输入错误</a>
+	      {% endif %}
+	      <input class="span2" type="text" maxlength="30" name="username" id="id_username">
+	      <input class="span2" type="password" maxlength="128" name="password" id="id_password">
+              <button type="submit" class="btn">登录</button>
+            </form>
+	    {% endif %}
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+       <div class="carousel-caption jumbotron">
            <h1>Sun-Top</h1>
            <h2>分享是阳光，温暖你我的世界；分享是雨露，滋润干涸的心田；分享是春风，拂去灵魂的尘埃。</h2>
            <form method="POST" action="/" enctype='multipart/form-data'>
              {{ ff.filename }}
-	     <input type="hidden" maxlength="30" value="{{ user.id }}" name="userid">
+             <input type="hidden" maxlength="30" value="{{ user.id }}" name="userid">
              <button class="btn btn-large btn-primary" type="submit">分享一下</button>
            </form>
         </div>
-{%endblock%}
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{% static "js/jquery.js" %}"></script>
+    <script src="{% static "js/bootstrap-transition.js" %}"></script>
+    <script src="{% static "js/bootstrap-alert.js" %}"></script>
+    <script src="{% static "js/bootstrap-modal.js" %}"></script>
+    <script src="{% static "js/bootstrap-dropdown.js" %}"></script>
+    <script src="/static/js/bootstrap-scrollspy.js"></script>
+    <script src="/static/js/bootstrap-tab.js"></script>
+    <script src="/static/js/bootstrap-tooltip.js"></script>
+    <script src="/static/js/bootstrap-popover.js"></script>
+    <script src="/static/js/bootstrap-button.js"></script>
+    <script src="/static/js/bootstrap-collapse.js"></script>
+    <script src="/static/js/bootstrap-carousel.js"></script>
+    <script src="/static/js/bootstrap-typeahead.js"></script>
+    <script src="/static/js/jquery.colorbox.min.js"></script>
+    <script src="/static/js/charisma.js"></script>
+
+  
+
+</body></html>
