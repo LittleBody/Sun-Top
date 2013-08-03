@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect, RequestContext, render
 from filemanage.models import File
+from django.contrib.auth.models import User
 from django import forms
 import os, hashlib, string
 
@@ -34,14 +35,18 @@ def index(request):
             newname = get_hash_key(filename)
             size = fileobj.size
             type = os.path.splitext(filename)[1]
-            data = File(filename=request.FILES['filename'], newname=newname, size=size, type=type)
-            data.save()
-            return render_to_response('upload.html', {'newname':newname})
+	    userid = request.POST.get('userid', '')
+	    if userid:
+		user = User.objects.get(id=userid)
+		data = File.objects.create(filename=request.FILES['filename'], newname=newname, size=size, type=type, user=user)
+	    else:
+		data = File.objects.create(filename=request.FILES['filename'], newname=newname, size=size, type=type, user="anonymous")
+            return render_to_response('upload.html', {'newname':newname}, context_instance=RequestContext(request))
         else:
             return HttpResponse("ERROR ENTER")
     else:
         ff = FileForm()
-    return render_to_response('index.html', {'ff':ff})
+    return render_to_response('index.html', {'ff':ff}, context_instance=RequestContext(request))
 
 def delete(request):
     if request.method == "POST" :
@@ -56,4 +61,4 @@ def pic_view(request, pic_id):
     fileobj = File.objects.get(newname = pic_id).filename
     filename = fileobj.name
     pic_path = os.path.join('/static', filename)
-    return render_to_response('pic_view.html', {'pic_path':pic_path})
+    return render_to_response('pic_view.html', {'pic_path':pic_path}, context_instance=RequestContext(request))

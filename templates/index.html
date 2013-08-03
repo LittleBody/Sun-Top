@@ -7,7 +7,8 @@
            <h2>現在每人可獲得1 terabyte 免費上載容量。</h2>
            <form method="POST" action="/" enctype='multipart/form-data'>
              {{ ff.filename }}
-             <button class="btn btn-large btn-primary" type="submit">Large button</button>
+	     <input type="hidden" maxlength="30" value="{{ user.id }}" name="userid">
+             <button class="btn btn-large btn-primary" type="submit">分享一下</button>
            </form>
         </div>
 {%endblock%}
