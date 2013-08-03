@@ -28,7 +28,7 @@
         color: #FFFFFF;
       }
       .jumbotron h2 {
-        font-size: 38.5px;
+        font-size: 24.5px;
         line-height: 1;
         color: #FFFFFF;
       }
@@ -42,12 +42,7 @@
       }
     </style>
     <link href="{% static "css/bootstrap-responsive.css" %}" rel="stylesheet">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://twitter.github.io/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://twitter.github.io/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://twitter.github.io/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="http://twitter.github.io/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="http://twitter.github.io/bootstrap/assets/ico/favicon.png">
-  </head>
+    <link rel="shortcut icon" href="static/images/favicon.png"> </head>
 
   <body>
 
@@ -63,8 +58,8 @@
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="active"><a href="/">Home</a></li>
-              <li><a href="">图片浏览</a></li>
-              <li><a href="">我的共享</a></li>
+              <li><a href="/filemanage/share/">图片浏览</a></li>
+              <li><a class="myshare" href="/filemanage/myshare/">我的共享</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">更多<b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -115,6 +110,8 @@
     <script src="/static/js/bootstrap-collapse.js"></script>
     <script src="/static/js/bootstrap-carousel.js"></script>
     <script src="/static/js/bootstrap-typeahead.js"></script>
+    <script src="/static/js/jquery.colorbox.min.js"></script>
+    <script src="/static/js/charisma.js"></script>
 
   
 

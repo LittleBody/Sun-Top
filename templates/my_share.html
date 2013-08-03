@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{%extends 'base.html'%}
+{%block content%}
+    <!-- content starts -->
+    <div class="row">
+	<div class="span10 offset1">
+	  <ul class="thumbnails gallery">
+	    {% for file_newname,file_path_resize in file_dict.items %}
+	    <li class="thumbnail" id="image-1">
+	    <a href="/{{ file_newname }}" title="Sample Image 1" class="cboxElement"><img alt="Sample Image 1" src="/static/{{ file_path_resize }}" class="grayscale" style="display: block;"></a>
+	    </li>
+	    {% endfor %}
+	  </ul>
+	</div>
+    </div>
+{%endblock%}
