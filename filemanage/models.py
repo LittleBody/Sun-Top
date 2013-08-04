@@ -6,4 +6,5 @@ class File(models.Model):
     newname = models.CharField(max_length=20)
     size = models.CharField(max_length=10)
     type = models.CharField(max_length=5)
+    date = models.DateTimeField()
     user = models.ForeignKey(User, null=True)
