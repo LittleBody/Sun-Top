@@ -5,6 +5,7 @@
      <h2>注册</h2>
       <form class="form-signin" style="width:300px; margin: 50px auto ;" method="post" action="/account/registe/">
         <table>
+	<tr>{% if user == "None" %}账户或密码不能为空！！{% endif %}</tr>
         <tr>
         <td>邮箱：</td>
         <td><a class="input-block-level">{{uf.email}}</a></td>

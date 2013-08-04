@@ -14,14 +14,6 @@ class Userform(forms.ModelForm):
 	    'password':forms.PasswordInput
 	}
 
-class Loginform(forms.ModelForm):
-    class Meta:
-	model = User
-	fields = ('username', 'password')
-	widgets = {
-            'password':forms.PasswordInput
-        }
-
 def registe(request):
     if request.method == "POST":
         uf = Userform(request.POST)
@@ -34,32 +26,31 @@ def registe(request):
             login(request, user)
             return HttpResponseRedirect('/')
 	else:
-	    error = "1"
-	    return render_to_response('registe.html', {'uf':uf,'error':error})
+	    user = "None"
+	    return render_to_response('registe.html', {'uf':uf,'user':user})
     else :
 	uf = Userform()
 	return render_to_response('registe.html', {'uf':uf}, context_instance=RequestContext(request))
 
 def user_login(request):
-    last_url = request.META.get('HTTP_REFERER','/')
-    rel_last_url = urlparse(last_url).path
     if request.method == "POST" :
 	username = request.POST.get('username')
 	password = request.POST.get('password')
-	if username is not None and password is not None:
+	if username and password:
 	    user = authenticate(username=username, password=password)
 	    if user is not None:
 		login(request, user)
 		return HttpResponseRedirect('/')
 	    else:
 		user = "None"
-		return render_to_response('index.html', {'user':user}, context_instance=RequestContext(request))
+		return render_to_response('login.html', {'user':user}, context_instance=RequestContext(request))
 	else:
 	    user = "None"
-	    return render_to_response('index.html', {'user':user}, context_instance=RequestContext(request))
+	    return render_to_response('login.html', {'user':user}, context_instance=RequestContext(request))
     else:
-        return HttpResponseRedirect('/')
+        return render_to_response('login.html', context_instance=RequestContext(request))
 
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect('/account/login/')
+

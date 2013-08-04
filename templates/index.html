@@ -57,7 +57,7 @@
           <a class="brand">Suntop</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="/">首页</a></li>
+              <li><a href="/">首页</a></li>
               <li><a href="/filemanage/share/">图片浏览</a></li>
               <li><a class="myshare" href="/filemanage/myshare/">我的共享</a></li>
               <li class="dropdown">
@@ -77,16 +77,13 @@
                 <ul class="dropdown-menu">
                     <li><a href="/account/logout/">退出</a></li>
                 </ul>
+              <a href="/account/registe/" class="btn">注册</a>
              </div>
 	    {% else %}
-            <form class="navbar-form pull-right" method="POST" action="/account/login/">
-	      {% if user == "None" %}
-		<a>用户名或密码输入错误</a>
-	      {% endif %}
-	      <input class="span2" type="text" maxlength="30" name="username" id="id_username">
-	      <input class="span2" type="password" maxlength="128" name="password" id="id_password">
-              <button type="submit" class="btn">登录</button>
-            </form>
+            <div class="pull-right">
+              <a href="/account/login/" class="btn">登录</a>
+              <a href="/account/registe/" class="btn">注册</a>
+            </div>
 	    {% endif %}
           </div><!--/.nav-collapse -->
         </div>

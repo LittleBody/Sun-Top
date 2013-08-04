@@ -38,7 +38,10 @@ def index(request):
             filename = fileobj.name
             newname = get_hash_key(filename)
 	    if File.objects.filter(newname=newname):
-		newname = get_hash_key(newname)
+		while True:
+		    newname = get_hash_key(newname)
+		    if not File.objects.filter(newname=newname):
+			break
             size = fileobj.size
             type = os.path.splitext(filename)[1]
 	    userid = request.POST.get('userid')
@@ -71,11 +74,15 @@ def index(request):
     return render_to_response('index.html', {'ff':ff}, context_instance=RequestContext(request))
 
 def delete(request):
+    user = request.user
     if request.method == "POST" :
         newname = request.POST.get('newname')
         p = File.objects.get(newname = newname)
-        p.delete()
-        return redirect("/")
+	if p.user == user:
+	    p.delete()
+	    return redirect("/")
+	else:
+	    return HttpResponse("权限不够!")
     else:
         return redirect("/")
 
