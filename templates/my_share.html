@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{%extends 'base.html'%}
+{%block content%}
+<legend>
+    <input type="text" name="search" id="search" aria-controls="DataTables_Table_0">
+    <button type="submit" class="btn btn-primary">Search</button>
+</legend>
+{% for file,file_path_resize in file_dict.items %}
+<div class="span2">
+    <ul class="thumbnails gallery">
+      <li class="thumbnail">
+      <a href="/{{ file.newname }}" class="cboxElement"><img src="/static/{{ file_path_resize }}" class="grayscale" style="display: block;"></a>
+      </li>
+    </ul>
+    <ul>
+      <li>{{ file.size }}B</li>
+      <li>{{ file.date.date }}</li>
+    </ul>
+</div>
+{% endfor %}
+{%endblock%}
