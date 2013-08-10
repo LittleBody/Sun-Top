@@ -102,7 +102,7 @@ def my_share(request):
     files = File.objects.filter(user=user)
     for file in files:
         filename = file.filename.name
-        file_dict[file.newname] = filename.replace('img','img_resize')
+        file_dict[file] = filename.replace('img','img_resize')
     return render_to_response('my_share.html', {'file_dict':file_dict}, context_instance=RequestContext(request))
 
 def all_share(request):
