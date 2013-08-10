@@ -8,11 +8,11 @@ from urlparse import urlparse
 
 class Userform(forms.ModelForm):
     class Meta:
-	model = User
-	fields = ('username', 'password', 'email')
-	widgets = {
-	    'password':forms.PasswordInput
-	}
+        model = User
+        fields = ('username', 'password', 'email')
+        widgets = {
+    'password':forms.PasswordInput
+}
 
 def registe(request):
     if request.method == "POST":
@@ -22,31 +22,31 @@ def registe(request):
             username = uf.cleaned_data['username']
             password = uf.cleaned_data['password']
             User.objects.create_user(username, email, password)
-	    user = authenticate(username=username, password=password)
+            user = authenticate(username=username, password=password)
             login(request, user)
             return HttpResponseRedirect('/')
-	else:
-	    user = "None"
-	    return render_to_response('registe.html', {'uf':uf,'user':user})
+        else:
+            user = "None"
+            return render_to_response('registe.html', {'uf':uf,'user':user})
     else :
-	uf = Userform()
-	return render_to_response('registe.html', {'uf':uf}, context_instance=RequestContext(request))
+        uf = Userform()
+        return render_to_response('registe.html', {'uf':uf}, context_instance=RequestContext(request))
 
 def user_login(request):
     if request.method == "POST" :
-	username = request.POST.get('username')
-	password = request.POST.get('password')
-	if username and password:
-	    user = authenticate(username=username, password=password)
-	    if user is not None:
-		login(request, user)
-		return HttpResponseRedirect('/')
-	    else:
-		user = "None"
-		return render_to_response('login.html', {'user':user}, context_instance=RequestContext(request))
-	else:
-	    user = "None"
-	    return render_to_response('login.html', {'user':user}, context_instance=RequestContext(request))
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        if username and password:
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect('/')
+            else:
+                user = "None"
+                return render_to_response('login.html', {'user':user}, context_instance=RequestContext(request))
+        else:
+            user = "None"
+            return render_to_response('login.html', {'user':user}, context_instance=RequestContext(request))
     else:
         return render_to_response('login.html', context_instance=RequestContext(request))
 

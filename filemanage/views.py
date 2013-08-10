@@ -38,35 +38,34 @@ def index(request):
             fileobj = ff.cleaned_data['filename']
             filename = fileobj.name
             newname = get_hash_key(filename)
-	    if File.objects.filter(newname=newname):
-		while True:
-		    newname = get_hash_key(newname)
-		    if not File.objects.filter(newname=newname):
-			break
+            if File.objects.filter(newname=newname):
+                while True:
+                    newname = get_hash_key(newname)
+                    if not File.objects.filter(newname=newname):
+                        break
             size = fileobj.size
             type = os.path.splitext(filename)[1]
-	    userid = request.POST.get('userid')
-	    if userid != "None":
-		user = User.objects.get(id=userid)
-	    else:
-		try:
-		    user = User.objects.get(username="anonymous")
-		except User.DoesNotExist:
-		    user = User.objects.create(username="anonymous", email="anonymous@suntop.com", password="anonymous")
-	    data = File.objects.create(filename=request.FILES['filename'], newname=newname, size=size, type=type, date=timezone.now(), user=user, )
+            userid = request.POST.get('userid')
+            if userid != "None":
+                user = User.objects.get(id=userid)
+            else:
+                try:
+                    user = User.objects.get(username="anonymous")
+                except User.DoesNotExist:
+                    user = User.objects.create(username="anonymous", email="anonymous@suntop.com", password="anonymous")
+                    data = File.objects.create(filename=request.FILES['filename'], newname=newname, size=size, type=type, date=timezone.now(), user=user, )
 
             #缩小图片并保存
-	    pro_dir = '/'.join(os.path.abspath(os.path.dirname(__file__)).split('/')[:-1]) 
-	    abs_filepath = os.path.join(pro_dir, "static", data.filename.name)
-	    abs_filepath_resize = os.path.join(pro_dir, "static/img_resize/", '/'.join(data.filename.name.split('/')[1:]))
-	    abs_dir_resize = os.path.dirname(abs_filepath_resize)
-	    if not os.path.exists(abs_dir_resize):
-	        os.makedirs(abs_dir_resize)
-	    with Image(filename=abs_filepath) as img:
+            pro_dir = '/'.join(os.path.abspath(os.path.dirname(__file__)).split('/')[:-1]) 
+            abs_filepath = os.path.join(pro_dir, "static", data.filename.name)
+            abs_filepath_resize = os.path.join(pro_dir, "static/img_resize/", '/'.join(data.filename.name.split('/')[1:]))
+            abs_dir_resize = os.path.dirname(abs_filepath_resize)
+            if not os.path.exists(abs_dir_resize):
+                os.makedirs(abs_dir_resize)
+            with Image(filename=abs_filepath) as img:
                 with img.clone() as i:
                     i.resize(int(150),int(150))
                     i.save(filename=abs_filepath_resize.format())
-
             return render_to_response('upload.html', {'newname':newname}, context_instance=RequestContext(request))
         else:
             return redirect("/")
@@ -79,11 +78,11 @@ def delete(request):
     if request.method == "POST" :
         newname = request.POST.get('newname')
         p = File.objects.get(newname = newname)
-	if p.user == user:
-	    p.delete()
-	    return redirect("/")
-	else:
-	    return HttpResponse("权限不够!")
+        if p.user == user:
+            p.delete()
+            return redirect("/")
+        else:
+            return HttpResponse("权限不够!")
     else:
         return redirect("/")
 
@@ -109,6 +108,6 @@ def all_share(request):
     file_dict={}
     files = File.objects.all()
     for file in files:
-	filename = file.filename.name
-	file_dict[file] = filename.replace('img', 'img_resize')
+        filename = file.filename.name
+        file_dict[file] = filename.replace('img', 'img_resize')
     return render_to_response('my_share.html', {'file_dict':file_dict}, context_instance=RequestContext(request))
