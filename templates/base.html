@@ -3,7 +3,7 @@
 <html lang="en"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <title>Bootstrap, from Twitter</title>
+    <title>Sun-Top</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -15,15 +15,33 @@
         padding-top: 60px;
         padding-bottom: 40px;
       }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 80px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 100px;
+        line-height: 1;
+        color: #FFFFFF;
+      }
+      .jumbotron h2 {
+        font-size: 24.5px;
+        line-height: 1;
+        color: #FFFFFF;
+      }
+      .jumbotron .lead {
+        font-size: 24px;
+        line-height: 1.25;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
     </style>
     <link href="{% static "css/bootstrap-responsive.css" %}" rel="stylesheet">
-
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://twitter.github.io/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://twitter.github.io/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://twitter.github.io/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="http://twitter.github.io/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="http://twitter.github.io/bootstrap/assets/ico/favicon.png">
-  </head>
+    <link rel="shortcut icon" href="static/images/favicon.png"> </head>
 
   <body>
 
@@ -35,44 +53,45 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#">Project name</a>
+          <a class="brand">Suntop</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li class=""><a href="/">首页</a></li>
+              <li><a href="/filemanage/share/">图片浏览</a></li>
+              <li><a class="myshare" href="/filemanage/myshare/">我的共享</a></li>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">更多<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li class="divider"></li>
-                  <li class="nav-header">Nav header</li>
-                  <li><a href="#">Separated link</a></li>
-                  <li><a href="#">One more separated link</a></li>
+                  <li><a href="#">关于我们</a></li>
+                  <li><a href="/account/registe/">注册</a></li>
                 </ul>
               </li>
             </ul>
-            <form class="navbar-form pull-right">
-              <input class="span2" placeholder="Email" type="text">
-              <input class="span2" placeholder="Password" type="password">
-              <button type="submit" class="btn">Sign in</button>
+           {% if user.is_authenticated %}
+             <div class="btn-group pull-right" >
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="icon-user"></i><span class="hidden-phone">{{user.username}}</span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/account/logout/">退出</a></li>
+                </ul>
+		<a href="/account/registe/" class="btn">注册</a>
+             </div>
+	    {% else %}
+            <div class="pull-right">
+              <a href="/account/login/" class="btn">登录</a>
+              <a href="/account/registe/" class="btn">注册</a>
+	    </div>
             </form>
+	    {% endif %}
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
 
     <div class="container">
-
-        {{  hello }}
-      <hr>
-
-      <footer>
-        <p>© Company 2013</p>
-      </footer>
-
+        {%block content%}{%endblock%}
     </div> <!-- /container -->
 
     <!-- Le javascript
@@ -91,6 +110,8 @@
     <script src="/static/js/bootstrap-collapse.js"></script>
     <script src="/static/js/bootstrap-carousel.js"></script>
     <script src="/static/js/bootstrap-typeahead.js"></script>
+    <script src="/static/js/jquery.colorbox.min.js"></script>
+    <script src="/static/js/charisma.js"></script>
 
   
 
