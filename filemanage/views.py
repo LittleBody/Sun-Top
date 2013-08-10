@@ -1,6 +1,6 @@
 #-*- coding:utf-8 -*-
 from django.http import HttpResponse
-from django.shortcuts import render_to_response, redirect, RequestContext, render
+from django.shortcuts import redirect, render
 from filemanage.models import File
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -53,7 +53,7 @@ def index(request):
                     user = User.objects.get(username="anonymous")
                 except User.DoesNotExist:
                     user = User.objects.create(username="anonymous", email="anonymous@suntop.com", password="anonymous")
-                    data = File.objects.create(filename=request.FILES['filename'], newname=newname, size=size, type=type, date=timezone.now(), user=user, )
+            data = File.objects.create(filename=request.FILES['filename'], newname=newname, size=size, type=type, date=timezone.now(), user=user, )
 
             #缩小图片并保存
             pro_dir = '/'.join(os.path.abspath(os.path.dirname(__file__)).split('/')[:-1]) 
@@ -66,12 +66,12 @@ def index(request):
                 with img.clone() as i:
                     i.resize(int(150),int(150))
                     i.save(filename=abs_filepath_resize.format())
-            return render_to_response('upload.html', {'newname':newname}, context_instance=RequestContext(request))
+            return render(request, 'upload.html', {'newname':newname})
         else:
             return redirect("/")
     else:
         ff = FileForm()
-    return render_to_response('index.html', {'ff':ff}, context_instance=RequestContext(request))
+    return render(request, 'index.html', {'ff':ff})
 
 def delete(request):
     user = request.user
@@ -86,28 +86,31 @@ def delete(request):
     else:
         return redirect("/")
 
-def pic_view(request, pic_id):
-    fileobj = File.objects.get(newname = pic_id).filename
+def pic_view(request, newname):
+    file = File()
+    fileobj = file.get_file_newname(newname)
     filename = fileobj.name
     filename_resize = filename.replace('img', 'img_resize')
     pic_path = os.path.join('/static', filename)
     pic_resize_path = os.path.join('/static', filename_resize)
-    return render_to_response('pic_view.html', {'pic_path':pic_path, 'pic_resize_path':pic_resize_path}, context_instance=RequestContext(request))
+    return render(request, 'pic_view.html', {'pic_path':pic_path, 'pic_resize_path':pic_resize_path})
 
 @login_required(login_url='/account/login/')
 def my_share(request):
     user = request.user
     file_dict = {}
-    files = File.objects.filter(user=user)
+    file = File()
+    files = file.get_file_user(user)
     for file in files:
         filename = file.filename.name
         file_dict[file] = filename.replace('img','img_resize')
-    return render_to_response('my_share.html', {'file_dict':file_dict}, context_instance=RequestContext(request))
+    return render(request, 'my_share.html', {'file_dict':file_dict})
 
 def all_share(request):
     file_dict={}
-    files = File.objects.all()
+    file = File()
+    files = file.get_file_all()
     for file in files:
         filename = file.filename.name
         file_dict[file] = filename.replace('img', 'img_resize')
-    return render_to_response('my_share.html', {'file_dict':file_dict}, context_instance=RequestContext(request))
+    return render(request, 'my_share.html', {'file_dict':file_dict})
