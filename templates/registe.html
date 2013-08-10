@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{%extends 'base.html'%}
+{%block content%}
+     <div class="container">
+     <h2>注册</h2>
+      <form class="form-signin" style="width:300px; margin: 50px auto ;" method="post" action="/account/registe/">
+        <table>
+	<tr>{% if user == "None" %}输入错误，请检查邮箱是否正确！！{% endif %}</tr>
+        <tr>
+        <td>邮箱：</td>
+        <td><a class="input-block-level">{{uf.email}}</a></td>
+        </tr>
+        <tr>
+        <td>账户：</td>
+        <td><a class="input-block-level">{{uf.username}}</a></td>
+        </tr>
+        <tr>
+        <td>密码：</td>
+        <td><a class="input-block-level">{{uf.password}}</a></td>
+        </tr>
+        <tr>
+        </table>
+        <button class="btn btn-large btn-primary" type="submit">提交</button>
+      </form>
+     </div>
+{%endblock%}
