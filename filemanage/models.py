@@ -9,14 +9,14 @@ class File(models.Model):
     date = models.DateTimeField()
     user = models.ForeignKey(User, null=True)
 
-    def get_file_newname(self, newname):
+    def getfile_by_newname(self, newname):
         fileobj = File.objects.get(newname = newname).filename
         return fileobj
 
-    def get_file_user(self, user):
+    def getfile_by_user(self, user):
         files = File.objects.filter(user=user)
         return files
 
-    def get_file_all(self):
+    def getfile_all(self):
         files = File.objects.all()
         return files

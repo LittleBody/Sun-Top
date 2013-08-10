@@ -10,8 +10,8 @@ class Userform(forms.ModelForm):
         model = User
         fields = ('username', 'password', 'email')
         widgets = {
-    'password':forms.PasswordInput
-}
+            'password':forms.PasswordInput
+        }
 
 def registe(request):
     if request.method == "POST":
@@ -25,14 +25,14 @@ def registe(request):
             login(request, user)
             return redirect('/')
         else:
-            user = "None"
-            return render(request, 'registe.html', {'uf':uf,'user':user})
+            Error = "null"
+            return render(request, 'registe.html', {'uf':uf,'Error':Error})
     else :
         uf = Userform()
         return render(request, 'registe.html', {'uf':uf})
 
 def user_login(request):
-    if request.method == "POST" :
+    if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
         if username and password:
@@ -41,11 +41,11 @@ def user_login(request):
                 login(request, user)
                 return redirect('/')
             else:
-                user = "None"
-                return render(request, 'login.html', {'user':user})
+                Error = "unauthenticate"
+                return render(request, 'login.html', {'Error':Error})
         else:
-            user = "None"
-            return render(request, 'login.html', {'user':user})
+            Error = "null"
+            return render(request, 'login.html', {'Error':Error})
     else:
         return render(request, 'login.html')
 
